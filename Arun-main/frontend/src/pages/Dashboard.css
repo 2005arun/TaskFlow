@@ -1,0 +1,201 @@
+.dashboard {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ── Stats Bar ─────────────────────────────────────────────── */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-todo .stat-value {
+    color: var(--text-secondary);
+}
+
+.stat-progress .stat-value {
+    color: var(--accent-2);
+}
+
+.stat-done .stat-value {
+    color: var(--success);
+}
+
+.stat-high .stat-value {
+    color: var(--danger);
+}
+
+/* ── Filter Bar ─────────────────────────────────────────────── */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.filter-search {
+    padding-left: 38px;
+}
+
+.filter-select {
+    width: auto;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.filter-clear {
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+}
+
+/* ── Kanban ─────────────────────────────────────────────────── */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+    flex: 1;
+}
+
+.kanban-col {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 300px;
+}
+
+.kanban-col-todo {
+    border-top: 3px solid rgba(148, 163, 184, 0.4);
+}
+
+.kanban-col-in_progress {
+    border-top: 3px solid rgba(6, 182, 212, 0.5);
+}
+
+.kanban-col-done {
+    border-top: 3px solid rgba(16, 185, 129, 0.5);
+}
+
+.kanban-col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 2px;
+}
+
+.kanban-col-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.kanban-count {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    border-radius: 100px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100px;
+}
+
+/* ── Loading ────────────────────────────────────────────────── */
+.board-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .stats-bar {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .kanban-board {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-content {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
