@@ -1,7 +1,7 @@
 .task-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
+    background: rgba(239, 232, 213, 0.055);
+    border: 1px solid var(--border);
+    border-radius: 9px;
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -11,9 +11,9 @@
 }
 
 .task-card:hover {
-    background: rgba(255, 255, 255, 0.07);
+    background: var(--bg-card-hover);
     transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.25);
+    border-color: rgba(231, 111, 81, 0.38);
 }
 
 .tc-header {

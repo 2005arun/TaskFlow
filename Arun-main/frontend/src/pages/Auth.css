@@ -8,9 +8,9 @@
 }
 
 .auth-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(239, 232, 213, 0.085), rgba(239, 232, 213, 0.035));
+    border: 1px solid var(--border);
+    border-radius: 12px;
     backdrop-filter: blur(20px);
     padding: 40px;
     width: 100%;
@@ -28,7 +28,7 @@
 .auth-logo span {
     font-size: 1.3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    background: linear-gradient(135deg, var(--accent-light), var(--accent-2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -75,4 +75,29 @@
 
 .auth-footer a:hover {
     text-decoration: underline;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0 16px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: var(--border);
+}
+
+.google-button {
+    display: flex;
+    justify-content: center;
+    min-height: 40px;
 }

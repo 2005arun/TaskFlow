@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 0 28px;
     height: 64px;
-    background: rgba(10, 13, 20, 0.8);
+    background: rgba(16, 19, 19, 0.86);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     position: sticky;
@@ -18,7 +18,7 @@
     gap: 10px;
     font-size: 1.15rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    background: linear-gradient(135deg, var(--accent-light), var(--accent-2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -26,7 +26,7 @@
 .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .navbar-user {
@@ -39,7 +39,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
     display: flex;
     align-items: center;
     justify-content: center;

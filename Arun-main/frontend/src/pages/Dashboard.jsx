@@ -1,10 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
-import {
-    dbGetTasks, dbGetStats,
-    dbCreateTask, dbUpdateTask, dbDeleteTask,
-} from '../services/localDB'
+import api from '../api/axios'
 import Navbar from '../components/Navbar'
 import TaskCard from '../components/TaskCard'
 import TaskModal from '../components/TaskModal'
@@ -24,33 +21,44 @@ export default function Dashboard() {
     const [editTask, setEditTask] = useState(null)
     const [filters, setFilters] = useState({ status: '', priority: '', search: '' })
 
-    // ── Load from localStorage ───────────────────────────────────────────────────
-    const refresh = useCallback(() => {
-        const t = dbGetTasks(user.id, filters)
-        const s = dbGetStats(user.id)
-        setTasks(t)
-        setStats(s)
+    // ── Load from the API backed by Neon PostgreSQL ─────────────────────────────
+    const refresh = useCallback(async () => {
+        const params = Object.fromEntries(
+            Object.entries(filters).filter(([, value]) => value)
+        )
+        const [tasksResponse, statsResponse] = await Promise.all([
+            api.get('/tasks', { params }),
+            api.get('/tasks/stats'),
+        ])
+        setTasks(tasksResponse.data.tasks)
+        setStats(statsResponse.data.stats)
     }, [user, filters])
 
-    useEffect(() => { refresh() }, [refresh])
+    useEffect(() => {
+        refresh().catch(() => toast.error('Failed to load tasks'))
+    }, [refresh])
 
     // ── CRUD ─────────────────────────────────────────────────────────────────────
-    const saveTask = (data, id) => {
+    const saveTask = async (data, id) => {
         if (id) {
-            dbUpdateTask(user.id, id, data)
+            await api.put(`/tasks/${id}`, data)
             toast.success('Task updated')
         } else {
-            dbCreateTask(user.id, data)
+            await api.post('/tasks', data)
             toast.success('Task created 🎉')
         }
-        refresh()
+        await refresh()
     }
 
-    const deleteTask = (id) => {
+    const deleteTask = async (id) => {
         if (!window.confirm('Delete this task?')) return
-        dbDeleteTask(user.id, id)
-        toast.success('Task deleted')
-        refresh()
+        try {
+            await api.delete(`/tasks/${id}`)
+            toast.success('Task deleted')
+            await refresh()
+        } catch (err) {
+            toast.error(err.response?.data?.error || 'Failed to delete task')
+        }
     }
 
     const openNew = () => { setEditTask(null); setModal(true) }
@@ -73,6 +81,14 @@ export default function Dashboard() {
             <Navbar onNewTask={openNew} />
 
             <div className="dashboard-content">
+                <header className="dashboard-heading fade-in">
+                    <div>
+                        <p className="eyebrow">Your workspace</p>
+                        <h1>Good to see you, {user?.name?.split(' ')[0] || 'there'}.</h1>
+                        <p className="dashboard-subtitle">Keep the important work moving forward.</p>
+                    </div>
+                    <div className="date-stamp">{new Intl.DateTimeFormat('en', { weekday: 'long', month: 'short', day: 'numeric' }).format(new Date())}</div>
+                </header>
 
                 {/* ── Stats Bar ──────────────────────────────────────────────── */}
                 {stats && (

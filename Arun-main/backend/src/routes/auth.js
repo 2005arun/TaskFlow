@@ -19,6 +19,7 @@ const loginRules = [
 // ── Routes ────────────────────────────────────────────────────────────────────
 router.post('/register', registerRules, validate, authController.register);
 router.post('/login', loginRules, validate, authController.login);
+router.post('/google', authController.googleLogin);
 router.get('/me', authenticate, authController.me);
 
 module.exports = router;

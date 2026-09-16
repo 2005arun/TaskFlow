@@ -1,14 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
 import './Auth.css'
 
 export default function Login() {
-    const { login } = useAuth()
+    const { login, loginWithGoogle } = useAuth()
     const navigate = useNavigate()
     const [form, setForm] = useState({ email: '', password: '' })
     const [loading, setLoading] = useState(false)
+    const googleButton = useRef(null)
+
+    useEffect(() => {
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
+        if (!clientId || !googleButton.current || !window.google) return
+
+        window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: async ({ credential }) => {
+                setLoading(true)
+                try {
+                    await loginWithGoogle(credential)
+                    toast.success('Welcome back!')
+                    navigate('/dashboard')
+                } catch (err) {
+                    toast.error(err.response?.data?.error || 'Google sign-in failed')
+                } finally {
+                    setLoading(false)
+                }
+            },
+        })
+        window.google.accounts.id.renderButton(googleButton.current, {
+            theme: 'outline',
+            size: 'large',
+            width: 340,
+            text: 'continue_with',
+        })
+    }, [loginWithGoogle, navigate])
 
     const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -20,7 +48,11 @@ export default function Login() {
             toast.success('Welcome back!')
             navigate('/dashboard')
         } catch (err) {
-            toast.error(err.message || 'Login failed')
+            const message = err.response?.status === 401
+                ? 'Email or password is incorrect.'
+                : err.response?.data?.error || 'Unable to sign in. Please try again.'
+            toast.error(message)
+            setForm(current => ({ ...current, password: '' }))
         } finally {
             setLoading(false)
         }
@@ -61,6 +93,13 @@ export default function Login() {
                         {loading ? <span className="spinner" /> : 'Sign In'}
                     </button>
                 </form>
+
+                {import.meta.env.VITE_GOOGLE_CLIENT_ID && (
+                    <>
+                        <div className="auth-divider"><span>or</span></div>
+                        <div className="google-button" ref={googleButton} />
+                    </>
+                )}
 
                 <p className="auth-footer">
                     Don't have an account?{' '}

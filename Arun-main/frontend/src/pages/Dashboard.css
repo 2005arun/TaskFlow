@@ -9,10 +9,42 @@
     padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 22px;
     max-width: 1400px;
     width: 100%;
     margin: 0 auto;
+}
+
+.dashboard-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 2px 2px;
+}
+
+.eyebrow {
+    color: var(--accent-light);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.dashboard-heading h1 { font-size: clamp(1.7rem, 3vw, 2.45rem); }
+
+.dashboard-subtitle {
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-size: 0.95rem;
+}
+
+.date-stamp {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding-bottom: 5px;
+    white-space: nowrap;
 }
 
 /* ── Stats Bar ─────────────────────────────────────────────── */
@@ -23,10 +55,10 @@
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 20px;
+    background: linear-gradient(145deg, rgba(239, 232, 213, 0.08), rgba(239, 232, 213, 0.025));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -34,7 +66,8 @@
 }
 
 .stat-card:hover {
-    background: rgba(255, 255, 255, 0.07);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
 }
 
 .stat-value {
@@ -74,6 +107,7 @@
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    padding: 4px 0;
 }
 
 .filter-search-wrap {
@@ -117,9 +151,9 @@
 }
 
 .kanban-col {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 18px;
+    background: rgba(239, 232, 213, 0.028);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -198,4 +232,9 @@
     .stats-bar {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .dashboard-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+    .date-stamp { padding-bottom: 0; }
+    .filter-search-wrap { min-width: 100%; }
+    .filter-select { flex: 1; min-width: 0; }
 }
