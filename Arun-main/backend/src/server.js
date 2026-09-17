@@ -52,8 +52,8 @@ app.use((_req, res) => {
 app.use(errorHandler);
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-    console.log(`🚀  TaskFlow API running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 TaskFlow API running on port ${PORT}`);
 });
 
 module.exports = app;
