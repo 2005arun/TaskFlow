@@ -29,6 +29,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (_req, res) => {
+    res.json({
+        status: 'ok',
+        message: 'TaskFlow API is running'
+    });
+});
+
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', async (_req, res) => {
     try {
